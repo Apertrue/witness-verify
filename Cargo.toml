@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+members = ["witness-verify", "witness-verify-wasm"]
+
+[profile.release]
+debug = 1
+lto = "fat"
+
+# The page's wasm build: small over fast to compile.
+[profile.wasmrel]
+inherits = "release"
+strip = "debuginfo"
+lto = "thin"
+opt-level = "s"
