@@ -4,9 +4,8 @@
 
 Please report security problems privately, not in a public issue or pull request.
 
-Security reports: see the contact on https://witness.apertrue.photo/help
+Security reports: email security@apertrue.photo. Please do not open a public issue for a vulnerability.
 
-<!-- Confirm the mailbox before publication. If security@apertrue.photo is set up and monitored, name it here. -->
 
 Include what you found, the version or commit, and the receipt bytes or steps that reproduce it, if you have them. We will acknowledge your report, keep you informed while we work on it, and credit you in the fix unless you would rather we did not.
 
