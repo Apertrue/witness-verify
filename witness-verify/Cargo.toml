@@ -20,3 +20,21 @@ serde_json = "1"
 sha2 = "0.10"
 bincode = "1"
 hex = "0.4"
+
+# The command-line verifiers: the same verdicts as the library, with the
+# summary as JSON on stdout and the exit code as the verdict.
+[[bin]]
+name = "batch_verify"
+path = "src/bin/batch_verify.rs"
+
+[[bin]]
+name = "enrol_verify"
+path = "src/bin/enrol_verify.rs"
+
+[[bin]]
+name = "membership_verify"
+path = "src/bin/membership_verify.rs"
+
+[[bin]]
+name = "registry_hash"
+path = "src/bin/registry_hash.rs"
