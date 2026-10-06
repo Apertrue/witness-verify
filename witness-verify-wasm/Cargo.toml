@@ -1,0 +1,15 @@
+[package]
+name = "witness-verify-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "The batch receipt verifier for the browser: wasm-bindgen over witness-verify"
+license = "Apache-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+witness-verify = { path = "../witness-verify" }
+wasm-bindgen = "0.2"
+getrandom = { version = "0.2", features = ["js"] }
