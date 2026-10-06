@@ -1,0 +1,202 @@
+flip_0	proof bytes do not parse
+flip_1	proof bytes do not parse
+flip_2	proof bytes do not parse
+flip_3	proof bytes do not parse
+flip_4	proof bytes do not parse
+flip_5	proof bytes do not parse
+flip_6	proof bytes do not parse
+flip_7	proof bytes do not parse
+flip_8	proof bytes do not parse
+flip_9	proof bytes do not parse
+flip_10	proof bytes do not parse
+flip_11	proof bytes do not parse
+flip_12	proof bytes do not parse
+flip_13	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_14	proof bytes do not parse
+flip_15	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_16	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_17	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_18	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_19	proof bytes do not parse
+flip_20	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_21	proof bytes do not parse
+flip_22	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_23	proof bytes do not parse
+flip_24	proof bytes do not parse
+flip_25	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_26	proof bytes do not parse
+flip_27	proof bytes do not parse
+flip_28	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_29	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_30	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_31	proof bytes do not parse
+flip_32	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_33	proof bytes do not parse
+flip_34	proof bytes do not parse
+flip_35	proof bytes do not parse
+flip_36	proof bytes do not parse
+flip_37	proof bytes do not parse
+flip_38	proof bytes do not parse
+flip_39	proof bytes do not parse
+flip_40	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_41	proof bytes do not parse
+flip_42	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_43	proof bytes do not parse
+flip_44	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_45	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_46	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_47	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_48	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_917	proof bytes do not parse
+flip_1787	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_2657	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_3527	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+flip_4397	proof bytes do not parse
+flip_5267	proof bytes do not parse
+flip_6137	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_7007	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_7877	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_8747	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_9617	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_10487	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_11357	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_12227	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_13097	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_13967	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_14837	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_15707	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_16577	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_17447	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_18317	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_19187	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_20057	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_20926	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_21796	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_22666	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_23536	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_24406	proof bytes do not parse
+flip_25276	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_26146	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_27016	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_27886	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_28756	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_29626	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_30496	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_31366	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_32236	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_33106	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_33976	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_34846	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_35716	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_36586	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_37456	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_38326	proof bytes do not parse
+flip_39196	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_40066	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_40936	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_41805	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_42675	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_43545	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_44415	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_45285	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_46155	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_47025	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_47895	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_48765	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_49635	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_50505	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_51375	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_52245	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_53115	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_53985	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_54855	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_55725	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_56595	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_57465	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_58335	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_59205	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_60075	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_60945	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_61815	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_62684	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_63554	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_64424	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_65294	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_66164	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_67034	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_67904	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_68774	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_69644	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_70514	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_71384	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+flip_72254	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 18" }
+flip_73124	proof bytes do not parse
+flip_73994	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 16" }
+flip_74864	proof bytes do not parse
+flip_75734	proof bytes do not parse
+flip_76604	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+flip_77474	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+flip_78344	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+flip_79214	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+flip_80084	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: ProofVerifyError: Direct opening: commitment mismatch" }
+flip_80954	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: ProofVerifyError: Direct opening: commitment mismatch" }
+flip_81824	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: ProofVerifyError: Direct opening: commitment mismatch" }
+flip_82694	proof bytes do not parse
+failed_window_stated_passed	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+passed_window_stated_failed	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+window_indices_moved	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+frames_inflated	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+degenerate_flag_set	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+picture_root_swapped	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+head_in_from_another_call	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+chain_rewired_through_another_head	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+head_out_from_another_call	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+chain_id_of_another_call	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+blinded_of_another_enrolment	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+genesis_of_another_chain	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+verifier_public_value_edited	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+verifier_challenge_replaced	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+step_challenge_added	the proof does not verify: ProofVerifyError { reason: "Challenges do not match" }
+blinding_instance_u_edited	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+blinding_instance_x_edited	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+windows_swapped	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+three_windows_rotated	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+second_step_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+steps_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+core_from_another_enrolment	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+shared_commitment_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+verifier_instance_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+blinding_instance_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+cross_term_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+evaluation_argument_from_the_next_batch	the proof does not verify: InvalidPCS { reason: "Inner product argument verify: First equation failed" }
+relaxed_proof_from_the_next_batch	the proof does not verify: ProofVerifyError { reason: "Relaxed Spartan verify failed: InvalidSumcheckProof" }
+next_batch_proof_carrying_a_values	the proof does not verify: ProofVerifyError { reason: "MultiRoundR1CSInstance:: Challenges do not match for round 0" }
+three_window_proof_truncated_to_two	the proof does not verify: ProofVerifyError { reason: "comm_w_per_round length (42) does not match shape num_rounds (41)" }
+two_window_proof_extended_to_three	the proof does not verify: ProofVerifyError { reason: "comm_w_per_round length (41) does not match shape num_rounds (42)" }
+two_window_proof_claimed_as_three	the proof does not verify: ProofVerifyError { reason: "Expected 3 instances (non-zero), got 2" }
+stated_chain_id	the receipt's stated values differ from the proof's
+stated_blinded	the receipt's stated values differ from the proof's
+stated_genesis	the receipt's stated values differ from the proof's
+stated_head_in	the receipt's stated values differ from the proof's
+stated_head_out	the receipt's stated values differ from the proof's
+stated_window_0_index	the receipt's stated values differ from the proof's
+stated_window_0_frames	the receipt's stated values differ from the proof's
+stated_window_0_degenerate	the receipt's stated values differ from the proof's
+stated_window_0_passed	the receipt's stated values differ from the proof's
+stated_window_0_picture_root	the receipt's stated values differ from the proof's
+stated_window_0_head_in	the receipt's stated values differ from the proof's
+stated_window_0_head_out	the receipt's stated values differ from the proof's
+stated_window_1_index	the receipt's stated values differ from the proof's
+stated_window_1_frames	the receipt's stated values differ from the proof's
+stated_window_1_degenerate	the receipt's stated values differ from the proof's
+stated_window_1_passed	the receipt's stated values differ from the proof's
+stated_window_1_picture_root	the receipt's stated values differ from the proof's
+stated_window_1_head_in	the receipt's stated values differ from the proof's
+stated_window_1_head_out	the receipt's stated values differ from the proof's
+byte_after_the_receipt	proof bytes do not parse
+bytes_after_the_proof	proof bytes do not parse
+shared_commitment_copied_into_instances	proof bytes do not parse
+shared_commitment_absent	proof bytes do not parse
+foreign_shared_commitment_in_an_instance	proof bytes do not parse
+non_canonical_field_element	proof bytes do not parse
+commitment_off_the_curve	proof bytes do not parse

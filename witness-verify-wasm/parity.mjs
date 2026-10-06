@@ -1,14 +1,14 @@
 // Verdict parity between the native verifier and the wasm one, over the
-// tamper corpus (witness-prover/examples/tamper_corpus.rs). Every case must
-// reach the same verdict in both, that verdict must be the expected one,
-// and an accepted receipt must give the same summary in both.
+// tamper corpus in fixtures/tamper-corpus (written by the devices
+// repository's prover). Every case must reach the same verdict in both,
+// that verdict must be the expected one, and an accepted receipt must give
+// the same summary in both. Run from the repository root:
 //
-//   cargo run --release -p witness-prover --example tamper_corpus -- <corpus>
-//   cargo build --release -p witness-prover --bin batch_verify
+//   cargo build --release -p witness-verify --bin batch_verify
 //   cargo build --profile wasmrel --target wasm32-unknown-unknown -p witness-verify-wasm
 //   wasm-bindgen --target nodejs --out-dir <pkg> \
 //     target/wasm32-unknown-unknown/wasmrel/witness_verify_wasm.wasm
-//   node witness-verify-wasm/parity.mjs <pkg> target/release/batch_verify <corpus>
+//   node witness-verify-wasm/parity.mjs <pkg> target/release/batch_verify fixtures/tamper-corpus
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';

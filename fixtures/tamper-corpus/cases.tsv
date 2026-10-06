@@ -1,0 +1,206 @@
+untouched_a	accept	none: an untouched receipt, which must verify
+untouched_next	accept	none: an untouched receipt, which must verify
+untouched_other	accept	none: an untouched receipt, which must verify
+untouched_three	accept	none: an untouched receipt, which must verify
+flip_0	refuse	bit 0 of proof byte 0 flipped
+flip_1	refuse	bit 1 of proof byte 1 flipped
+flip_2	refuse	bit 2 of proof byte 2 flipped
+flip_3	refuse	bit 3 of proof byte 3 flipped
+flip_4	refuse	bit 4 of proof byte 4 flipped
+flip_5	refuse	bit 5 of proof byte 5 flipped
+flip_6	refuse	bit 6 of proof byte 6 flipped
+flip_7	refuse	bit 7 of proof byte 7 flipped
+flip_8	refuse	bit 0 of proof byte 8 flipped
+flip_9	refuse	bit 1 of proof byte 9 flipped
+flip_10	refuse	bit 2 of proof byte 10 flipped
+flip_11	refuse	bit 3 of proof byte 11 flipped
+flip_12	refuse	bit 4 of proof byte 12 flipped
+flip_13	refuse	bit 5 of proof byte 13 flipped
+flip_14	refuse	bit 6 of proof byte 14 flipped
+flip_15	refuse	bit 7 of proof byte 15 flipped
+flip_16	refuse	bit 0 of proof byte 16 flipped
+flip_17	refuse	bit 1 of proof byte 17 flipped
+flip_18	refuse	bit 2 of proof byte 18 flipped
+flip_19	refuse	bit 3 of proof byte 19 flipped
+flip_20	refuse	bit 4 of proof byte 20 flipped
+flip_21	refuse	bit 5 of proof byte 21 flipped
+flip_22	refuse	bit 6 of proof byte 22 flipped
+flip_23	refuse	bit 7 of proof byte 23 flipped
+flip_24	refuse	bit 0 of proof byte 24 flipped
+flip_25	refuse	bit 1 of proof byte 25 flipped
+flip_26	refuse	bit 2 of proof byte 26 flipped
+flip_27	refuse	bit 3 of proof byte 27 flipped
+flip_28	refuse	bit 4 of proof byte 28 flipped
+flip_29	refuse	bit 5 of proof byte 29 flipped
+flip_30	refuse	bit 6 of proof byte 30 flipped
+flip_31	refuse	bit 7 of proof byte 31 flipped
+flip_32	refuse	bit 0 of proof byte 32 flipped
+flip_33	refuse	bit 1 of proof byte 33 flipped
+flip_34	refuse	bit 2 of proof byte 34 flipped
+flip_35	refuse	bit 3 of proof byte 35 flipped
+flip_36	refuse	bit 4 of proof byte 36 flipped
+flip_37	refuse	bit 5 of proof byte 37 flipped
+flip_38	refuse	bit 6 of proof byte 38 flipped
+flip_39	refuse	bit 7 of proof byte 39 flipped
+flip_40	refuse	bit 0 of proof byte 40 flipped
+flip_41	refuse	bit 1 of proof byte 41 flipped
+flip_42	refuse	bit 2 of proof byte 42 flipped
+flip_43	refuse	bit 3 of proof byte 43 flipped
+flip_44	refuse	bit 4 of proof byte 44 flipped
+flip_45	refuse	bit 5 of proof byte 45 flipped
+flip_46	refuse	bit 6 of proof byte 46 flipped
+flip_47	refuse	bit 7 of proof byte 47 flipped
+flip_48	refuse	bit 0 of proof byte 48 flipped
+flip_917	refuse	bit 5 of proof byte 917 flipped
+flip_1787	refuse	bit 3 of proof byte 1787 flipped
+flip_2657	refuse	bit 1 of proof byte 2657 flipped
+flip_3527	refuse	bit 7 of proof byte 3527 flipped
+flip_4397	refuse	bit 5 of proof byte 4397 flipped
+flip_5267	refuse	bit 3 of proof byte 5267 flipped
+flip_6137	refuse	bit 1 of proof byte 6137 flipped
+flip_7007	refuse	bit 7 of proof byte 7007 flipped
+flip_7877	refuse	bit 5 of proof byte 7877 flipped
+flip_8747	refuse	bit 3 of proof byte 8747 flipped
+flip_9617	refuse	bit 1 of proof byte 9617 flipped
+flip_10487	refuse	bit 7 of proof byte 10487 flipped
+flip_11357	refuse	bit 5 of proof byte 11357 flipped
+flip_12227	refuse	bit 3 of proof byte 12227 flipped
+flip_13097	refuse	bit 1 of proof byte 13097 flipped
+flip_13967	refuse	bit 7 of proof byte 13967 flipped
+flip_14837	refuse	bit 5 of proof byte 14837 flipped
+flip_15707	refuse	bit 3 of proof byte 15707 flipped
+flip_16577	refuse	bit 1 of proof byte 16577 flipped
+flip_17447	refuse	bit 7 of proof byte 17447 flipped
+flip_18317	refuse	bit 5 of proof byte 18317 flipped
+flip_19187	refuse	bit 3 of proof byte 19187 flipped
+flip_20057	refuse	bit 1 of proof byte 20057 flipped
+flip_20926	refuse	bit 6 of proof byte 20926 flipped
+flip_21796	refuse	bit 4 of proof byte 21796 flipped
+flip_22666	refuse	bit 2 of proof byte 22666 flipped
+flip_23536	refuse	bit 0 of proof byte 23536 flipped
+flip_24406	refuse	bit 6 of proof byte 24406 flipped
+flip_25276	refuse	bit 4 of proof byte 25276 flipped
+flip_26146	refuse	bit 2 of proof byte 26146 flipped
+flip_27016	refuse	bit 0 of proof byte 27016 flipped
+flip_27886	refuse	bit 6 of proof byte 27886 flipped
+flip_28756	refuse	bit 4 of proof byte 28756 flipped
+flip_29626	refuse	bit 2 of proof byte 29626 flipped
+flip_30496	refuse	bit 0 of proof byte 30496 flipped
+flip_31366	refuse	bit 6 of proof byte 31366 flipped
+flip_32236	refuse	bit 4 of proof byte 32236 flipped
+flip_33106	refuse	bit 2 of proof byte 33106 flipped
+flip_33976	refuse	bit 0 of proof byte 33976 flipped
+flip_34846	refuse	bit 6 of proof byte 34846 flipped
+flip_35716	refuse	bit 4 of proof byte 35716 flipped
+flip_36586	refuse	bit 2 of proof byte 36586 flipped
+flip_37456	refuse	bit 0 of proof byte 37456 flipped
+flip_38326	refuse	bit 6 of proof byte 38326 flipped
+flip_39196	refuse	bit 4 of proof byte 39196 flipped
+flip_40066	refuse	bit 2 of proof byte 40066 flipped
+flip_40936	refuse	bit 0 of proof byte 40936 flipped
+flip_41805	refuse	bit 5 of proof byte 41805 flipped
+flip_42675	refuse	bit 3 of proof byte 42675 flipped
+flip_43545	refuse	bit 1 of proof byte 43545 flipped
+flip_44415	refuse	bit 7 of proof byte 44415 flipped
+flip_45285	refuse	bit 5 of proof byte 45285 flipped
+flip_46155	refuse	bit 3 of proof byte 46155 flipped
+flip_47025	refuse	bit 1 of proof byte 47025 flipped
+flip_47895	refuse	bit 7 of proof byte 47895 flipped
+flip_48765	refuse	bit 5 of proof byte 48765 flipped
+flip_49635	refuse	bit 3 of proof byte 49635 flipped
+flip_50505	refuse	bit 1 of proof byte 50505 flipped
+flip_51375	refuse	bit 7 of proof byte 51375 flipped
+flip_52245	refuse	bit 5 of proof byte 52245 flipped
+flip_53115	refuse	bit 3 of proof byte 53115 flipped
+flip_53985	refuse	bit 1 of proof byte 53985 flipped
+flip_54855	refuse	bit 7 of proof byte 54855 flipped
+flip_55725	refuse	bit 5 of proof byte 55725 flipped
+flip_56595	refuse	bit 3 of proof byte 56595 flipped
+flip_57465	refuse	bit 1 of proof byte 57465 flipped
+flip_58335	refuse	bit 7 of proof byte 58335 flipped
+flip_59205	refuse	bit 5 of proof byte 59205 flipped
+flip_60075	refuse	bit 3 of proof byte 60075 flipped
+flip_60945	refuse	bit 1 of proof byte 60945 flipped
+flip_61815	refuse	bit 7 of proof byte 61815 flipped
+flip_62684	refuse	bit 4 of proof byte 62684 flipped
+flip_63554	refuse	bit 2 of proof byte 63554 flipped
+flip_64424	refuse	bit 0 of proof byte 64424 flipped
+flip_65294	refuse	bit 6 of proof byte 65294 flipped
+flip_66164	refuse	bit 4 of proof byte 66164 flipped
+flip_67034	refuse	bit 2 of proof byte 67034 flipped
+flip_67904	refuse	bit 0 of proof byte 67904 flipped
+flip_68774	refuse	bit 6 of proof byte 68774 flipped
+flip_69644	refuse	bit 4 of proof byte 69644 flipped
+flip_70514	refuse	bit 2 of proof byte 70514 flipped
+flip_71384	refuse	bit 0 of proof byte 71384 flipped
+flip_72254	refuse	bit 6 of proof byte 72254 flipped
+flip_73124	refuse	bit 4 of proof byte 73124 flipped
+flip_73994	refuse	bit 2 of proof byte 73994 flipped
+flip_74864	refuse	bit 0 of proof byte 74864 flipped
+flip_75734	refuse	bit 6 of proof byte 75734 flipped
+flip_76604	refuse	bit 4 of proof byte 76604 flipped
+flip_77474	refuse	bit 2 of proof byte 77474 flipped
+flip_78344	refuse	bit 0 of proof byte 78344 flipped
+flip_79214	refuse	bit 6 of proof byte 79214 flipped
+flip_80084	refuse	bit 4 of proof byte 80084 flipped
+flip_80954	refuse	bit 2 of proof byte 80954 flipped
+flip_81824	refuse	bit 0 of proof byte 81824 flipped
+flip_82694	refuse	bit 6 of proof byte 82694 flipped
+failed_window_stated_passed	refuse	the failing window's passed bit set in the proof
+passed_window_stated_failed	refuse	the passing window's passed bit cleared in the proof
+window_indices_moved	refuse	every window index moved by 100, consistently
+frames_inflated	refuse	a window's frame count raised from 24 to 240
+degenerate_flag_set	refuse	a window's degenerate flag set
+picture_root_swapped	refuse	a window's picture root replaced with the next window's
+head_in_from_another_call	refuse	the batch's starting head replaced with another call's chain head
+chain_rewired_through_another_head	refuse	the head between the two windows replaced with another call's, on both sides
+head_out_from_another_call	refuse	the batch's final head replaced with another call's chain head
+chain_id_of_another_call	refuse	every chain id, steps and core, replaced with another call's
+blinded_of_another_enrolment	refuse	the blinded enrolment replaced with another enrolment's
+genesis_of_another_chain	refuse	the genesis head replaced with another chain's
+verifier_public_value_edited	refuse	a public value of the verifier circuit's instance edited
+verifier_challenge_replaced	refuse	a challenge the verifier circuit's instance carries replaced
+step_challenge_added	refuse	a challenge added to a step instance that takes none
+blinding_instance_u_edited	refuse	the scalar u of the blinding instance edited
+blinding_instance_x_edited	refuse	a public value of the blinding instance edited
+windows_swapped	refuse	the two step instances swapped, the receipt restated
+three_windows_rotated	refuse	three step instances rotated, the receipt restated
+second_step_from_the_next_batch	refuse	the second step instance taken from the next batch's proof
+steps_from_the_next_batch	refuse	every step instance taken from the next batch's proof
+core_from_another_enrolment	refuse	the core instance and shared commitment taken from another enrolment's proof
+shared_commitment_from_the_next_batch	refuse	the shared commitment taken from the next batch's proof
+verifier_instance_from_the_next_batch	refuse	the verifier circuit's instance taken from the next batch's proof
+blinding_instance_from_the_next_batch	refuse	the blinding instance taken from the next batch's proof
+cross_term_from_the_next_batch	refuse	the folding cross-term commitment taken from the next batch's proof
+evaluation_argument_from_the_next_batch	refuse	the evaluation argument taken from the next batch's proof
+relaxed_proof_from_the_next_batch	refuse	the relaxed Spartan proof taken from the next batch's proof
+next_batch_proof_carrying_a_values	refuse	the next batch's proof with this batch's public values written in
+three_window_proof_truncated_to_two	refuse	a proof made under the key for three windows, cut to two step instances
+two_window_proof_extended_to_three	refuse	a proof made under the key for two windows, given a third step instance
+two_window_proof_claimed_as_three	refuse	a receipt claiming three windows for a proof of two
+stated_chain_id	refuse	the receipt's chain_id changed, the proof untouched
+stated_blinded	refuse	the receipt's blinded changed, the proof untouched
+stated_genesis	refuse	the receipt's genesis changed, the proof untouched
+stated_head_in	refuse	the receipt's head_in changed, the proof untouched
+stated_head_out	refuse	the receipt's head_out changed, the proof untouched
+stated_window_0_index	refuse	the receipt's window_0_index changed, the proof untouched
+stated_window_0_frames	refuse	the receipt's window_0_frames changed, the proof untouched
+stated_window_0_degenerate	refuse	the receipt's window_0_degenerate changed, the proof untouched
+stated_window_0_passed	refuse	the receipt's window_0_passed changed, the proof untouched
+stated_window_0_picture_root	refuse	the receipt's window_0_picture_root changed, the proof untouched
+stated_window_0_head_in	refuse	the receipt's window_0_head_in changed, the proof untouched
+stated_window_0_head_out	refuse	the receipt's window_0_head_out changed, the proof untouched
+stated_window_1_index	refuse	the receipt's window_1_index changed, the proof untouched
+stated_window_1_frames	refuse	the receipt's window_1_frames changed, the proof untouched
+stated_window_1_degenerate	refuse	the receipt's window_1_degenerate changed, the proof untouched
+stated_window_1_passed	refuse	the receipt's window_1_passed changed, the proof untouched
+stated_window_1_picture_root	refuse	the receipt's window_1_picture_root changed, the proof untouched
+stated_window_1_head_in	refuse	the receipt's window_1_head_in changed, the proof untouched
+stated_window_1_head_out	refuse	the receipt's window_1_head_out changed, the proof untouched
+byte_after_the_receipt	refuse	a zero byte appended to a valid receipt
+bytes_after_the_proof	refuse	32 zero bytes appended to a valid proof inside its receipt
+shared_commitment_copied_into_instances	refuse	the shared commitment also written into a step instance and the core
+shared_commitment_absent	refuse	the proof's one copy of the shared commitment removed, with no instance carrying one
+foreign_shared_commitment_in_an_instance	refuse	another enrolment's shared commitment written into a step instance
+non_canonical_field_element	refuse	a public value in the proof encoded as itself plus the modulus
+commitment_off_the_curve	refuse	a commitment row replaced with bytes that encode no curve point
