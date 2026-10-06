@@ -30,7 +30,11 @@ fn main() -> ExitCode {
     // Compare this digest with your pinned table before trusting a verdict.
     let batch = BatchVerifier::new();
     match batch.vk_digest(receipt.windows) {
-        Ok(d) => println!("batch key ({} windows): {}", receipt.windows, hex::encode(d)),
+        Ok(d) => println!(
+            "batch key ({} windows): {}",
+            receipt.windows,
+            hex::encode(d)
+        ),
         Err(e) => {
             eprintln!("refused: {e}");
             return ExitCode::from(1);
@@ -48,13 +52,15 @@ fn main() -> ExitCode {
     if let Some(path) = args.get(1) {
         let bytes = std::fs::read(path).expect("read the membership proof");
         let membership = MembershipVerifier::new();
-        let verified = MembershipReceipt::decode(&bytes)
-            .and_then(|m| membership.verify(&m));
+        let verified = MembershipReceipt::decode(&bytes).and_then(|m| membership.verify(&m));
         match verified {
             // The membership proof and the receipt are joined by the
             // blinded value: both must state the same one.
             Ok(m) if m.blinded == summary.blinded => {
-                println!("membership key: {}", hex::encode(membership.vk_digest().unwrap()));
+                println!(
+                    "membership key: {}",
+                    hex::encode(membership.vk_digest().unwrap())
+                );
                 println!("registry root: {}", hex::encode(m.root));
             }
             Ok(_) => {

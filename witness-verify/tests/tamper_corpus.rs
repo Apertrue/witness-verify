@@ -81,14 +81,18 @@ fn every_case_reaches_the_verdict_the_source_verifier_reached() {
                 }
                 refused += 1;
             }
-            ("accept", Err(reason)) => {
-                failures.push(format!("{name}: refused ({reason}), must accept ({attack})"))
-            }
+            ("accept", Err(reason)) => failures.push(format!(
+                "{name}: refused ({reason}), must accept ({attack})"
+            )),
             ("refuse", Ok(_)) => failures.push(format!("{name}: accepted, must refuse ({attack})")),
             (other, _) => failures.push(format!("{name}: unknown verdict {other:?}")),
         }
     }
     assert!(failures.is_empty(), "{}", failures.join("\n"));
-    assert_eq!((accepted, refused), (4, 202), "the corpus is 4 accepted and 202 refused");
+    assert_eq!(
+        (accepted, refused),
+        (4, 202),
+        "the corpus is 4 accepted and 202 refused"
+    );
     assert_eq!(reasons.len(), 202, "one recorded reason per refused case");
 }

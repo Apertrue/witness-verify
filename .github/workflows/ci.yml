@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    name: fmt, clippy, test, wasm, pinned keys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # rust-toolchain.toml pins the version, rustfmt, clippy and the
+      # wasm32-unknown-unknown target; this installs all of them.
+      - name: Install the pinned toolchain
+        run: rustup toolchain install
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --release -- -D warnings
+
+      # Includes tests/tamper_corpus.rs: every fixture must reach the
+      # verdict, summary and refusal the source verifier gave it.
+      - name: Test
+        run: cargo test --workspace --release
+
+      - name: Build for the browser
+        run: |
+          rustup target add wasm32-unknown-unknown
+          cargo build --profile wasmrel --target wasm32-unknown-unknown -p witness-verify-wasm
+
+      # Every derived verifier key must match PINNED_KEYS.md line for line.
+      - name: Pinned verifier keys
+        run: |
+          cargo run --release -p witness-verify --example vk_digests > derived.txt
+          awk '/^```text$/{f=1;next} /^```$/{f=0} f' PINNED_KEYS.md > pinned.txt
+          test -s pinned.txt
+          diff -u pinned.txt derived.txt
+
+  deny:
+    name: cargo deny
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check

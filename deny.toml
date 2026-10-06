@@ -1,0 +1,46 @@
+# cargo deny check: licences, advisories, bans and sources.
+
+[graph]
+all-features = false
+
+[licenses]
+# The permissive set this workspace allows, and nothing else.
+allow = [
+    "Apache-2.0",
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unicode-3.0",
+]
+confidence-threshold = 0.9
+# The list is the permitted set, so an entry the tree does not use today
+# is not an error.
+unused-allowed-license = "allow"
+
+# vega-prover, the Spartan2 fork, names its licence by file only, so
+# cargo-deny warns that the manifest has no licence field and identifies
+# the file as MIT (Microsoft's Spartan2, see THIRD_PARTY_NOTICES.md).
+
+[advisories]
+version = 2
+ignore = [
+    # bincode 1 is unmaintained. It is the receipt encoding (fixed-width
+    # integers, bounded, trailing bytes refused), shared with the prover
+    # and the backend, so replacing it is a receipt format change. No
+    # vulnerability is reported against it.
+    { id = "RUSTSEC-2025-0141", reason = "bincode 1 is the receipt format; unmaintained, not vulnerable" },
+    # paste is unmaintained, reached through halo2curves. A build-time
+    # macro crate; no vulnerability is reported against it.
+    { id = "RUSTSEC-2024-0436", reason = "paste via halo2curves; unmaintained build-time macro, not vulnerable" },
+]
+
+[bans]
+multiple-versions = "allow"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-git = ["https://github.com/Apertrue/vega-prover.git"]

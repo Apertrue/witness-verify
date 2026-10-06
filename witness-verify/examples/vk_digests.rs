@@ -29,6 +29,8 @@ fn main() {
             Err(e) => println!("batch {n} refused: {e}"),
         }
     }
-    let m = MembershipVerifier::new().vk_digest().expect("membership key setup");
+    let m = MembershipVerifier::new()
+        .vk_digest()
+        .expect("membership key setup");
     println!("membership {}", hex::encode(m));
 }
