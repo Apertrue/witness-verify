@@ -9,3 +9,6 @@ First public release of the Witness receipt verifier, split out of the proving c
 - Bounded decoding: bincode with fixed-width integers, size caps, 2 to 64 windows per batch, trailing bytes refused, canonical field elements and on-curve points enforced.
 - Builds for `wasm32-unknown-unknown`, wrapped for the browser by `witness-verify-wasm`.
 - Examples: `verify_call` verifies a receipt and its membership proof; `vk_digests` prints every derived key digest.
+- Command-line verifiers: `batch_verify`, `enrol_verify`, `membership_verify` and `registry_hash`.
+- The 206-case tamper corpus as fixtures, run by `cargo test`, and every verifier key digest in `PINNED_KEYS.md`, checked by CI.
+- Licensed under Apache 2.0.

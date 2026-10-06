@@ -9,9 +9,8 @@
 </p>
 
 <p align="center">
-  <!-- Switch to Apache 2.0 once the licence is chosen: https://img.shields.io/badge/license-Apache%202.0-blue -->
-  <img src="https://img.shields.io/badge/licence-to%20be%20decided-lightgrey" alt="Licence" />
-  <img src="https://img.shields.io/badge/tests-23%20passing-green" alt="Tests" />
+  <img src="https://img.shields.io/badge/licence-Apache%202.0-blue" alt="Licence: Apache 2.0" />
+  <img src="https://img.shields.io/badge/tests-24%20passing-green" alt="Tests" />
   <img src="https://img.shields.io/badge/wasm-yes-blueviolet" alt="WebAssembly" />
   <img src="https://img.shields.io/badge/backend-vega--prover%20(Spartan2%20fork)-orange" alt="Backend" />
   <img src="https://img.shields.io/badge/rust-stable%20(1.98%20tested)-informational" alt="Rust" />
@@ -64,7 +63,13 @@ Decoding is bounded before anything is allocated or derived. Receipts are bincod
 
 ## Quick start
 
-The crate is not on crates.io yet. Add it as a git dependency, then:
+The crate is not on crates.io yet. Add it as a git dependency:
+
+```toml
+witness-verify = { git = "https://github.com/Apertrue/witness-verify.git" }
+```
+
+Then:
 
 ```rust
 use witness_verify::membership::{MembershipReceipt, MembershipVerifier};
@@ -98,13 +103,32 @@ cargo run --release --example verify_call -- receipt.bin membership.bin
 
 The first verification for a batch size runs key setup, which takes seconds rather than milliseconds, and the verifier keeps the keys for the rest of the process. `BatchVerifier::warm(n)` and `MembershipVerifier::warm()` do it ahead of time.
 
+### From a terminal
+
+The crate builds four command-line verifiers. Each reads its input through a byte cap, prints what the proof establishes as JSON on stdout, and answers with its exit code: 0 for valid, 1 for refused (the reason on stderr), 2 for usage or unreadable input.
+
+```bash
+cargo build --release --bins
+
+target/release/batch_verify receipt.bin           # a batch receipt: its summary as JSON
+target/release/batch_verify --vk-digest 2         # the key digest for a batch of 2 windows
+target/release/membership_verify proof.bin        # a membership proof: {"root", "blinded"}
+target/release/membership_verify --vk-digest      # the membership key digest
+target/release/enrol_verify enrolment.bin         # an enrolment proof: {"leaf", "domain", "weightCommitment"}
+echo '{"id": 1, "inputs": ["0x01", "0x02"]}' | target/release/registry_hash
+```
+
+`registry_hash` is Poseidon2 for the registry tree, one JSON request per line on stdin and one reply per line on stdout: `{"id", "inputs": [...]}` gives `{"id", "hash"}`, and `{"id", "batch": [[...], ...]}` gives `{"id", "hashes"}`. A value that is not hex, or is at or above the BN254 modulus, is an error, never a reduction.
+
+To try one on a real receipt, `fixtures/tamper-corpus/untouched_a.bin` is a valid batch receipt and `flip_0.bin` beside it is the same receipt with one bit flipped.
+
 The crate also carries what the prover and the verifier share: the window chain (`chain`), Poseidon2 over BN254 (`poseidon2`), the registry tree (`registry`) and the summary as JSON (`summary`).
 
 ## In the browser
 
 The same code builds for `wasm32-unknown-unknown`. Its sibling crate, `witness-verify-wasm`, wraps it with wasm-bindgen as `warm`, `vk_digest`, `verify`, `membership_vk_digest`, `warm_membership` and `verify_membership`. The page ships about 1.5 MB of wasm and no key material, because it derives the keys itself. The Witness verify page compares each derived digest with its pinned table before it shows a verdict, then re-verifies every receipt in the viewer's own browser.
 
-The browser build is checked against the native one over a 206-case tamper corpus: flipped proof bits, edited public values, reordered and mixed instances, proofs cut to another key, edited stated fields and non-canonical encodings. Every case must reach the same verdict in both, and an accepted receipt must give the same summary.
+The browser build is checked against the native one over a 206-case tamper corpus: flipped proof bits, edited public values, reordered and mixed instances, proofs cut to another key, edited stated fields and non-canonical encodings. Every case must reach the same verdict in both, and an accepted receipt must give the same summary. The corpus is committed in `fixtures/tamper-corpus`, written by the Witness prover, with each case's expected verdict in `cases.tsv`; `cargo test` runs every case through the native verifier, and `witness-verify-wasm/parity.mjs` runs it through both.
 
 ## Reproducing the pinned keys
 
@@ -115,14 +139,14 @@ cargo run --release --example vk_digests          # batch sizes 2 to 64, then me
 cargo run --release --example vk_digests -- 2     # one size
 ```
 
-Compare the output with the digests Witness pins. The first batch size and the membership key are:
+Compare the output with the digests Witness pins, all of which are in [PINNED_KEYS.md](PINNED_KEYS.md); CI derives every key and fails on any difference. The first batch size and the membership key are:
 
 ```
 batch 2     ba75ef2b570da1a4bd5a49e388375bfbdcabd7a2bfc7e739d6b597da63b778d4
 membership  92eca04116a47bf9c6afa5e1dab3041f02e71a0c12f0ba0f8213c2fa4e41d638
 ```
 
-`cargo test` runs the crate's own 23 tests: Poseidon2 against Noir's known digest, the window chain and registry tree against shared vectors, packing against the C that defines the format, and the window verdict against the camera's limit, including that a degenerate window never passes and that a verdict cannot be flipped.
+`cargo test --release` runs the crate's own 23 tests: Poseidon2 against Noir's known digest, the window chain and registry tree against shared vectors, packing against the C that defines the format, and the window verdict against the camera's limit, including that a degenerate window never passes and that a verdict cannot be flipped. It also runs the tamper corpus: every case must reach its expected verdict, an accepted receipt must give the summary the Witness prover's own verifier gave it, and a refused one must be refused for the same reason.
 
 ## Security model
 
@@ -140,9 +164,11 @@ Please report privately. See [SECURITY.md](SECURITY.md).
 
 ## Licence
 
-To be decided before publication. Until then the manifest says `UNLICENSED` and publishing is switched off. The Poseidon2 constants come from Aztec's barretenberg, which is licensed under Apache 2.0, and keep its notice.
+Licensed under the [Apache License, Version 2.0](LICENSE). Copyright 2026 Apertrue Ltd.
 
-<!-- Replace the paragraph above with the chosen licence (Apache 2.0 expected) and add LICENSE. -->
+The Poseidon2 parameters match Aztec's barretenberg, licensed under Apache 2.0, and the backend, vega-prover, is a fork of Microsoft's Spartan2, licensed under MIT. Both notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Unless you state otherwise, any contribution you submit for inclusion in this repository is licensed as above, without additional terms or conditions.
 
 ## About Apertrue
 
