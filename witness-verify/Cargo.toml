@@ -1,0 +1,22 @@
+[package]
+name = "witness-verify"
+version = "0.1.0"
+edition = "2021"
+description = "Witness receipt verifier: decodes and verifies batch receipts, enrolment proofs and membership proofs"
+# Apache 2.0. publish stays off until the owner switches it on.
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+# Pinned by commit, the same rev witness-prover names: the proof format
+# is the receipt format, so the verifier must use exactly the backend
+# the prover does.
+vega-prover = { git = "https://github.com/Apertrue/vega-prover.git", rev = "16bd5c60e5460f8af97bd53d9e0771f56cfb4a54" }
+bellpepper-core = "0.4"
+ff = "0.13"
+halo2curves = { version = "0.10", features = ["derive_serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+bincode = "1"
+hex = "0.4"
