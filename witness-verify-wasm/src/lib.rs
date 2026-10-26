@@ -9,10 +9,18 @@ use wasm_bindgen::prelude::*;
 use witness_verify::membership::{MembershipReceipt, MembershipVerifier};
 use witness_verify::BatchVerifier;
 
+/// The batch sizes whose verifier keys the page holds at once. wasm32 has
+/// 4 GiB of memory and one size's keys take hundreds of MiB, so a cache
+/// keeping every size it met ran out on a call with many sizes and the
+/// module aborted mid-verify (17 October 2026). A size beyond these is
+/// derived again when it next comes, a few seconds, never a wrong verdict.
+const RETAINED_SIZES: usize = 2;
+
 fn verifier() -> &'static BatchVerifier {
-    // One verifier for the page's lifetime: keys per batch size, made once.
+    // One verifier for the page's lifetime: keys for the last few batch
+    // sizes, verifier keys only.
     static PROVER: std::sync::OnceLock<BatchVerifier> = std::sync::OnceLock::new();
-    PROVER.get_or_init(BatchVerifier::new)
+    PROVER.get_or_init(|| BatchVerifier::for_verifying(RETAINED_SIZES))
 }
 
 fn batch_size(batch_size: f64) -> Result<usize, JsError> {
