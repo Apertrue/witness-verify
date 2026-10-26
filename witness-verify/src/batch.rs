@@ -13,7 +13,7 @@ use ff::Field;
 use halo2curves::bn256::Fr;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::sync::Mutex;
+use std::sync::{Mutex, MutexGuard, TryLockError};
 use vega_prover::{
     errors::VegaError,
     provider::Bn254Engine,
@@ -147,16 +147,48 @@ impl std::error::Error for VerifyError {}
 /// Keys per batch size, made on first use. Setup is deterministic: the
 /// same size gives the same keys on every machine, so a verifier needs no
 /// key file, only the size.
-type KeyPair = (VegaMcProverKey<E>, VegaMcVerifierKey<E>);
+///
+/// The prover key is absent from a verifier-only cache (`for_verifying`):
+/// it is about as large as the verifier key and verification never reads it.
+struct Keys {
+    pk: Option<VegaMcProverKey<E>>,
+    vk: VegaMcVerifierKey<E>,
+}
 
 /// The batch verifier: the key cache per batch size and the checks a
 /// receipt must pass. The prover in witness-prover wraps one, so both
 /// sides share the cache and derive their keys the same way.
+///
+/// The keys for one size hold about 450 MiB once made, whatever the size,
+/// and a 32-bit address space holds 4 GiB: a cache that keeps every size
+/// it meets runs out after eight or nine sizes and the allocator aborts.
+/// The browser met that on 17 October 2026, when a lengthened window gave
+/// a call its ninth and tenth batch sizes and the page's verifier trapped
+/// on receipts the service had accepted. So a verifier-only cache keeps at
+/// most `retain` sizes, dropping the least recently used before it makes
+/// another, and keeps no prover keys at all.
 pub struct BatchVerifier {
-    keys: Mutex<HashMap<usize, KeyPair>>,
+    keys: Mutex<KeyCache>,
     /// How many key setups have run: the observable a test needs to show
     /// that a refused receipt asked for none.
     setups: std::sync::atomic::AtomicUsize,
+    /// None keeps every size and its prover key (the prover's cache);
+    /// Some(k) keeps at most k sizes and verifier keys only.
+    retain: Option<usize>,
+}
+
+#[derive(Default)]
+struct KeyCache {
+    by_size: HashMap<usize, Keys>,
+    /// Sizes held, least recently used first.
+    order: Vec<usize>,
+}
+
+impl KeyCache {
+    fn touch(&mut self, n: usize) {
+        self.order.retain(|m| *m != n);
+        self.order.push(n);
+    }
 }
 
 /// A batch size keys are made for.
@@ -197,10 +229,24 @@ fn shape_circuits(n: usize) -> (StepCircuit<E>, CoreCircuit<E>) {
 }
 
 impl BatchVerifier {
+    /// The prover's cache: every size it meets, with its prover key.
     pub fn new() -> Self {
         Self {
-            keys: Mutex::new(HashMap::new()),
+            keys: Mutex::new(KeyCache::default()),
             setups: std::sync::atomic::AtomicUsize::new(0),
+            retain: None,
+        }
+    }
+
+    /// A verifier-only cache holding the keys of at most `retain` batch
+    /// sizes (at least one), verifier keys only: what a verifier that lives
+    /// for many receipts in a bounded address space uses (the browser's).
+    /// Verdicts are the same as `new`'s; only memory and re-derivation
+    /// differ.
+    pub fn for_verifying(retain: usize) -> Self {
+        Self {
+            retain: Some(retain.max(1)),
+            ..Self::new()
         }
     }
 
@@ -209,31 +255,118 @@ impl BatchVerifier {
         self.setups.load(std::sync::atomic::Ordering::SeqCst)
     }
 
+    /// The batch sizes whose keys are held now, least recently used first.
+    pub fn held(&self) -> Vec<usize> {
+        self.cache().order.clone()
+    }
+
+    /// Takes the cache lock. A panic while it was held (in a key setup, or
+    /// in a proof run under `with_keys`) poisons it, and the cache may then
+    /// be part made. So a poisoned cache is emptied and the poison cleared:
+    /// the next use makes its keys again, the same keys, since setup is
+    /// deterministic. Without this every later use would panic in turn and
+    /// the keys could never be released.
+    fn cache(&self) -> MutexGuard<'_, KeyCache> {
+        match self.keys.lock() {
+            Ok(keys) => keys,
+            Err(poisoned) => Self::recovered(&self.keys, poisoned.into_inner()),
+        }
+    }
+
+    /// Empties a cache whose lock was poisoned and clears the poison.
+    fn recovered<'a>(
+        lock: &'a Mutex<KeyCache>,
+        mut keys: MutexGuard<'a, KeyCache>,
+    ) -> MutexGuard<'a, KeyCache> {
+        keys.by_size.clear();
+        keys.order.clear();
+        lock.clear_poison();
+        keys
+    }
+
+    /// Runs `f` with the cache entry for size `n`, making it on first use.
+    fn with_entry<T>(&self, n: usize, f: impl FnOnce(&Keys) -> T) -> T {
+        assert!(batch_size_ok(n), "batch size checked by every caller");
+        let mut keys = self.cache();
+        if !keys.by_size.contains_key(&n) {
+            if let Some(k) = self.retain {
+                // Drop before making: the setup's own peak then lands in
+                // the memory the dropped keys gave back.
+                while keys.order.len() >= k {
+                    let oldest = keys.order.remove(0);
+                    keys.by_size.remove(&oldest);
+                }
+            }
+            self.setups
+                .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            let (step, core) = shape_circuits(n);
+            let (pk, vk) = VegaMcZkSNARK::<E>::setup(&step, &core, n).expect("key setup");
+            let pk = if self.retain.is_none() {
+                Some(pk)
+            } else {
+                drop(pk);
+                None
+            };
+            keys.by_size.insert(n, Keys { pk, vk });
+        }
+        keys.touch(n);
+        f(&keys.by_size[&n])
+    }
+
     /// Runs `f` with the keys for batch size `n`, making them on first
     /// use. Public for the prover, which proves under the prover key of
-    /// the same setup; verification reads only the verifier key.
+    /// the same setup; verification reads only the verifier key. A
+    /// verifier-only cache holds no prover key, so this panics on one.
     #[doc(hidden)]
     pub fn with_keys<T>(
         &self,
         n: usize,
         f: impl FnOnce(&VegaMcProverKey<E>, &VegaMcVerifierKey<E>) -> T,
     ) -> T {
-        assert!(batch_size_ok(n), "batch size checked by every caller");
-        let mut keys = self.keys.lock().unwrap();
-        let (pk, vk) = keys.entry(n).or_insert_with(|| {
-            self.setups
-                .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            let (step, core) = shape_circuits(n);
-            VegaMcZkSNARK::<E>::setup(&step, &core, n).expect("key setup")
-        });
-        f(pk, vk)
+        self.with_entry(n, |k| {
+            f(
+                k.pk.as_ref()
+                    .expect("a verifier-only cache holds no prover key"),
+                &k.vk,
+            )
+        })
+    }
+
+    fn with_vk<T>(&self, n: usize, f: impl FnOnce(&VegaMcVerifierKey<E>) -> T) -> T {
+        self.with_entry(n, |k| f(&k.vk))
     }
 
     /// Drops the keys for a batch size, if made; the next use makes them
     /// again. The opening batch's keys are used once per stream and are the
     /// largest single allocation the app holds for the rest of a call.
     pub fn forget(&self, n: usize) {
-        self.keys.lock().unwrap().remove(&n);
+        let mut keys = self.cache();
+        keys.by_size.remove(&n);
+        keys.order.retain(|m| *m != n);
+    }
+
+    /// Drops the keys for every batch size held, unless the cache is in use
+    /// right now (a proof or a verification holds its lock for the whole of
+    /// its run), in which case nothing is dropped and this answers false.
+    /// It never waits, so a caller between calls cannot be held up by the
+    /// tail of the last one, and a key in use is never dropped. The next
+    /// use of any size makes its keys again, exactly as on first use; setup
+    /// is deterministic, so the keys made again are the keys dropped.
+    /// A cache poisoned by a panic is not in use: it is emptied, its poison
+    /// cleared, and this answers true.
+    pub fn release_if_idle(&self) -> bool {
+        match self.keys.try_lock() {
+            Ok(mut keys) => {
+                keys.by_size.clear();
+                keys.order.clear();
+                true
+            }
+            Err(TryLockError::Poisoned(poisoned)) => {
+                drop(Self::recovered(&self.keys, poisoned.into_inner()));
+                true
+            }
+            Err(TryLockError::WouldBlock) => false,
+        }
     }
 
     /// Makes the keys for a batch size now rather than on first use.
@@ -244,7 +377,7 @@ impl BatchVerifier {
         if n > MAX_BATCH {
             return Err(VerifyError::TooLarge(n));
         }
-        self.with_keys(n, |_, _| ());
+        self.with_vk(n, |_| ());
         Ok(())
     }
 
@@ -260,7 +393,7 @@ impl BatchVerifier {
         if n > MAX_BATCH {
             return Err(VerifyError::TooLarge(n));
         }
-        Ok(self.with_keys(n, |_, vk| {
+        Ok(self.with_vk(n, |vk| {
             let bytes = bincode::serialize(vk).expect("a verifier key serialises");
             sha2::Sha256::digest(bytes).into()
         }))
@@ -295,7 +428,7 @@ impl BatchVerifier {
                 .map_err(|_| VerifyError::Malformed)?
         };
         let (step_io, core_io) =
-            self.with_keys(n, |_, vk| proof.verify(vk, n))
+            self.with_vk(n, |vk| proof.verify(vk, n))
                 .map_err(|e| match e {
                     // The prover writes the shared commitment once and vega's
                     // verifier copies it into every instance, so vega refuses a

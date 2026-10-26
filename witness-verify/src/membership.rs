@@ -33,7 +33,7 @@ use halo2curves::bn256::Fr;
 use serde::{Deserialize, Serialize};
 use std::marker::PhantomData;
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Mutex;
+use std::sync::{Mutex, MutexGuard, TryLockError};
 use vega_prover::traits::{circuit::VegaCircuit, snark::R1CSSNARKTrait, Engine};
 use vega_prover::vega_sc_zkp::VegaZkSNARK;
 
@@ -320,7 +320,7 @@ impl MembershipVerifier {
     /// verification reads only the verifier key.
     #[doc(hidden)]
     pub fn with_keys<T>(&self, f: impl FnOnce(&Pk, &Vk) -> T) -> Result<T, MembershipError> {
-        let mut keys = self.keys.lock().unwrap();
+        let mut keys = self.pair();
         if keys.is_none() {
             self.setups.fetch_add(1, Ordering::SeqCst);
             let made = Snark::setup(shape_circuit())
@@ -334,6 +334,51 @@ impl MembershipVerifier {
     /// Makes the keys now rather than on the first proof.
     pub fn warm(&self) -> Result<(), MembershipError> {
         self.with_keys(|_, _| ())
+    }
+
+    /// Takes the key pair's lock. A panic while it was held (in setup, or
+    /// in a proof run under `with_keys`) poisons it; the pair is then
+    /// dropped and the poison cleared, so the next use makes the pair
+    /// again, the same pair, rather than every later use panicking in turn.
+    fn pair(&self) -> MutexGuard<'_, Option<(Pk, Vk)>> {
+        match self.keys.lock() {
+            Ok(keys) => keys,
+            Err(poisoned) => {
+                let mut keys = poisoned.into_inner();
+                *keys = None;
+                self.keys.clear_poison();
+                keys
+            }
+        }
+    }
+
+    /// Drops the key pair, unless a proof or verification is using it right
+    /// now, in which case nothing is dropped and this answers false. It
+    /// never waits. The next use makes the pair again, the same pair, since
+    /// setup is deterministic. A pair whose lock a panic poisoned is not in
+    /// use: it is dropped, the poison cleared, and this answers true.
+    pub fn release_if_idle(&self) -> bool {
+        match self.keys.try_lock() {
+            Ok(mut keys) => {
+                *keys = None;
+                true
+            }
+            Err(TryLockError::Poisoned(poisoned)) => {
+                // The guard is held until the poison is cleared, so no other
+                // thread's panic can land between the two and be erased.
+                let mut keys = poisoned.into_inner();
+                *keys = None;
+                self.keys.clear_poison();
+                drop(keys);
+                true
+            }
+            Err(TryLockError::WouldBlock) => false,
+        }
+    }
+
+    /// Whether the key pair is held now.
+    pub fn held(&self) -> bool {
+        self.pair().is_some()
     }
 
     /// SHA-256 over the verifier key as bincode: the value to pin, as
