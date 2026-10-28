@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0 (28 October 2026)
 
 First public release of the Witness receipt verifier, split out of the proving crate so it can be published on its own.
 
@@ -14,3 +14,4 @@ First public release of the Witness receipt verifier, split out of the proving c
 - Licensed under Apache 2.0.
 - The browser verifier's key cache is bounded, so a page that verifies many receipts in one worker no longer grows past wasm32's 4 GiB; `parity.mjs` runs every case through one wasm instance to catch that, and can fail on a memory ceiling.
 - `release_if_idle` and `held` let an app drop the verifier's keys between calls, and a key cache left unusable by a failed build recovers on the next use.
+- `scripts/build_wasm.sh` rebuilds the browser verifier the Witness verify page serves, byte for byte, and prints each file's SHA-256.
