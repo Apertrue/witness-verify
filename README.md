@@ -139,6 +139,16 @@ The same code builds for `wasm32-unknown-unknown`. Its sibling crate, `witness-v
 
 The browser build is checked against the native one over a 206-case tamper corpus: flipped proof bits, edited public values, reordered and mixed instances, proofs cut to another key, edited stated fields and non-canonical encodings. Every case must reach the same verdict in both, and an accepted receipt must give the same summary. The corpus is committed in `fixtures/tamper-corpus`, written by the Witness prover, with each case's expected verdict in `cases.tsv`; `cargo test` runs every case through the native verifier, and `witness-verify-wasm/parity.mjs` runs it through both.
 
+### Rebuilding the page's verifier
+
+The WebAssembly the verify page serves can be rebuilt from this repository, byte for byte:
+
+```bash
+scripts/build_wasm.sh
+```
+
+It prints the SHA-256 of `witness_verify_wasm_bg.wasm` and `witness_verify_wasm.js`. Compare them with the files attached to the [release](https://github.com/Apertrue/witness-verify/releases) and with what the page loads from `https://witness.apertrue.photo/verify/verifier/`. The build was reproduced this way on Apple silicon macOS with the pinned toolchain; other hosts have not been tried yet.
+
 ## Reproducing the pinned keys
 
 Verifier keys are derived locally from the circuit shapes. The setup is transparent and deterministic, so there is nothing to download and nothing to trust about who ran it. A change to a circuit, or to how the backend derives keys, changes the digest. To derive every key and print its digest:
