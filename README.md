@@ -1,5 +1,8 @@
 <p align="center">
-  <img src=".github/banner.png" alt="Apertrue" width="400" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/banner-dark.svg" />
+    <img src=".github/banner-light.svg" alt="Apertrue Witness" width="320" />
+  </picture>
 </p>
 
 <h3 align="center">witness-verify</h3>
@@ -10,7 +13,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/licence-Apache%202.0-blue" alt="Licence: Apache 2.0" />
-  <img src="https://img.shields.io/badge/tests-24%20passing-green" alt="Tests" />
+  <a href="https://github.com/Apertrue/witness-verify/actions/workflows/ci.yml"><img src="https://github.com/Apertrue/witness-verify/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
   <img src="https://img.shields.io/badge/wasm-yes-blueviolet" alt="WebAssembly" />
   <img src="https://img.shields.io/badge/backend-vega--prover%20(Spartan2%20fork)-orange" alt="Backend" />
   <img src="https://img.shields.io/badge/rust-stable%20(1.98%20tested)-informational" alt="Rust" />
@@ -29,6 +32,12 @@ A verified batch receipt establishes, for each window, the verdict against the c
 The proof covers the camera and the face in the ring (the picture the Witness verify page shows beside the call), nothing more. Video swapped into the meeting by software, from a file or a face-swapping tool, never touches it, because the proof reads the camera and not the meeting app.
 
 **The proof does not prove a live person is in front of the lens.** A deepfake can still reach a viewer three ways. A screen or a mask held in front of the enrolled camera is captured like anything else. A computer with its protections switched off can be fed frames ahead of the camera extension, and if they carry the enrolled sensor's pattern the check passes. Hardware spliced into the camera module inside the computer is beyond anything software can attest. The voice is not checked at all. Only the person using Witness is checked, and nothing here speaks for anyone else on the call.
+
+## Try it
+
+The [sample call](https://witness.apertrue.photo/verify/sample) opens the receipt of a real call and re-verifies it in your browser with this crate's WebAssembly build. "Now try a tampered copy" changes one character of a proof and runs the same checks again.
+
+A receipt saved from a call is one `.json` file. Drop it on the [verification page](https://witness.apertrue.photo/verify) to check it the same way. The command-line verifiers below read the individual proofs inside it, as raw bytes.
 
 ## How verification works
 
