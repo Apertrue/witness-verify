@@ -23,15 +23,17 @@
 
 ## What this is
 
-[Witness](https://witness.apertrue.photo) proves, during a video call, that the person on camera is using a camera they registered in advance. Each proof it produces is a receipt, and this crate is the verifier for those receipts: anyone can run it, so a Witness receipt never has to be taken on trust, ours or the service's. It decodes and verifies three artefacts. **Batch receipts** are a zero-knowledge proof over a run of windows of video frames, NeutronNova multi-folded and proven with Spartan on vega-prover, Apertrue's fork of Microsoft's Spartan2, over BN254 with Poseidon2. **Enrolment proofs** show that a registry entry and its enrolment commitment describe the same sensor. **Membership proofs** show that a camera is in the registry, a Merkle tree of depth 20, without revealing which entry is its own. The prover is not in this repository and does not need to be: a proof's soundness does not depend on the prover being secret, only on the circuits and the backend, and both are here or pinned here.
+[Witness](https://witness.apertrue.photo) proves, during a video call, that the person on camera is using a camera they registered in advance. Each proof it produces is a receipt, and this crate is the verifier for those receipts. Anyone can run it, so nobody has to take a receipt on our word. It reads batch receipts (version 5), enrolment proofs (version 2) and membership proofs (version 2). It decodes and verifies three artefacts. **Batch receipts** are a zero-knowledge proof over a run of windows of video frames, NeutronNova multi-folded and proven with Spartan on vega-prover, Apertrue's fork of Microsoft's Spartan2, over BN254 with Poseidon2. **Enrolment proofs** show that a registry entry and its enrolment commitment describe the same sensor. **Membership proofs** show that a camera is in the registry, a Merkle tree of depth 20, without revealing which entry is its own. The prover isn't here. A proof's soundness rests on the circuits and the backend, which are in this repository or pinned by it, not on the prover being secret.
 
-## What a receipt proves, and what it does not
+## What a verified receipt shows
 
 A verified batch receipt establishes, for each window, the verdict against the camera's committed limit, the window's picture root, and the chain head it moves from and to. It establishes for the batch that the enrolled measurements behind the blinded commitment are the ones the chain's genesis was built from. Together with the call's membership proof, which publishes the same blinded value, that means the windows came from one camera registered in advance, and reached the verifier unaltered. The verifier learns the registry root, which is public anyway, and a value that is fresh every call, so two calls from one camera publish unrelated values.
 
-The proof covers the camera and the face in the ring (the picture the Witness verify page shows beside the call), nothing more. Video swapped into the meeting by software, from a file or a face-swapping tool, never touches it, because the proof reads the camera and not the meeting app.
+It also covers the picture of the face that the Witness verify page shows beside the call, which is taken from those same frames. Whether that face matches the sender's passport is a separate check, not part of this proof. Video swapped into the meeting by software, from a file or a face-swapping tool, never touches the proof, because the proof reads the camera and not the meeting app.
 
-**The proof does not prove a live person is in front of the lens.** A deepfake can still reach a viewer three ways. A screen or a mask held in front of the enrolled camera is captured like anything else. A computer with its protections switched off can be fed frames ahead of the camera extension, and if they carry the enrolled sensor's pattern the check passes. Hardware spliced into the camera module inside the computer is beyond anything software can attest. The voice is not checked at all. Only the person using Witness is checked, and nothing here speaks for anyone else on the call.
+## Limits
+
+The proof covers the camera and that picture, nothing more. **It does not prove a live person is in front of the lens.** A deepfake can still reach a viewer three ways. A screen or a mask held in front of the enrolled camera is captured like anything else. A computer with its protections switched off can be fed frames ahead of the camera extension, and if they carry the enrolled sensor's pattern the check passes. Hardware spliced into the camera module inside the computer is beyond anything software can attest. The voice is not checked at all. Only the person using Witness is checked, and nothing here speaks for anyone else on the call.
 
 ## Try it
 
@@ -41,7 +43,7 @@ A receipt saved from a call is one `.json` file. Drop it on the [verification pa
 
 ## How verification works
 
-Every value in a verified summary comes from the proof's own public values. A receipt may state what it proves, but only exactly: any stated field that differs from the proof is refused.
+Every value in a verified summary comes from the proof's own public values. A receipt may state what it proves, but only exactly, and any stated field that differs from the proof is refused.
 
 ```mermaid
 flowchart LR
@@ -56,7 +58,7 @@ flowchart LR
     F -- fails --> X
 ```
 
-The digest comparison is yours to make: the crate derives the key and gives you `vk_digest`, and a deployment compares it with the digests it has pinned. The Witness verify page does exactly that.
+The crate derives the key and gives you `vk_digest`. Comparing it with the digests you have pinned is up to you, and the Witness verify page does exactly that.
 
 What a receipt covers:
 
@@ -127,7 +129,7 @@ target/release/enrol_verify enrolment.bin         # an enrolment proof: {"leaf",
 echo '{"id": 1, "inputs": ["0x01", "0x02"]}' | target/release/registry_hash
 ```
 
-`registry_hash` is Poseidon2 for the registry tree, one JSON request per line on stdin and one reply per line on stdout: `{"id", "inputs": [...]}` gives `{"id", "hash"}`, and `{"id", "batch": [[...], ...]}` gives `{"id", "hashes"}`. A value that is not hex, or is at or above the BN254 modulus, is an error, never a reduction.
+`registry_hash` is Poseidon2 for the registry tree, one JSON request per line on stdin and one reply per line on stdout. `{"id", "inputs": [...]}` gives `{"id", "hash"}`, and `{"id", "batch": [[...], ...]}` gives `{"id", "hashes"}`. A value that is not hex, or is at or above the BN254 modulus, is an error, never a reduction.
 
 To try one on a real receipt, `fixtures/tamper-corpus/untouched_a.bin` is a valid batch receipt and `flip_0.bin` beside it is the same receipt with one bit flipped.
 
@@ -151,7 +153,7 @@ It prints the SHA-256 of `witness_verify_wasm_bg.wasm` and `witness_verify_wasm.
 
 ## Reproducing the pinned keys
 
-Verifier keys are derived locally from the circuit shapes. The setup is transparent and deterministic, so there is nothing to download and nothing to trust about who ran it. A change to a circuit, or to how the backend derives keys, changes the digest. To derive every key and print its digest:
+Verifier keys are derived locally from the circuit shapes. The setup is transparent and deterministic, so there are no key files to download and no setup ceremony to trust. A change to a circuit, or to how the backend derives keys, changes the digest. To derive every key and print its digest:
 
 ```bash
 cargo run --release --example vk_digests          # batch sizes 2 to 64, then membership
@@ -169,13 +171,17 @@ membership  92eca04116a47bf9c6afa5e1dab3041f02e71a0c12f0ba0f8213c2fa4e41d638
 
 ## Security model
 
-Trusted: the circuit definitions in this repository; the vega-prover backend at the revision pinned in `Cargo.toml`; halo2curves for BN254; the Poseidon2 parameters, which match Aztec's barretenberg reference at a pinned revision, all 260 values in order.
+The verifier trusts the circuit definitions in this repository, the vega-prover backend at the revision pinned in `Cargo.toml`, halo2curves for BN254, and the Poseidon2 parameters, which match Aztec's barretenberg reference at a pinned revision, all 260 values in order.
 
-Not trusted: the Witness service, the network between it and you, and the prover. A receipt is checked as bytes from an adversary. The service carries the evidence from one end to the other; it is a courier, not the judge.
+It does not trust the Witness service, the network between it and you, or the prover. A receipt is checked as bytes from an adversary. The service carries the evidence between the call and you, and has no say in whether it verifies.
 
-## Reviews
+## Status
 
-In October 2026 the circuits and this verifier were reviewed internally by two independent automated reviewers, and the findings were fixed. An independent external review is the next milestone.
+Version 0.1.0, so the API may change before 1.0. In October 2026 the circuits and this verifier were reviewed internally, with two AI code reviewers, and the findings were fixed. An external audit has not yet been done.
+
+## Contributing
+
+Issues and pull requests are welcome. Please report anything security-related privately, as below.
 
 ## Reporting a vulnerability
 
