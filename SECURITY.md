@@ -18,6 +18,6 @@ Include what you found, the version or commit, and the receipt bytes or steps th
 
 ## What is out of scope
 
-The limits stated in the README under "Limits" are known boundaries, not vulnerabilities: a screen or a mask in front of the enrolled camera, a computer with its protections switched off, hardware spliced into the camera module, and the voice.
+The limits stated in the README under "Limits" are known boundaries, not vulnerabilities: a screen or a mask in front of the enrolled camera, a computer compromised below the app, hardware spliced into the camera module, and the voice.
 
 Problems in the Witness service, the apps or the website are welcome too, at the same contact.
