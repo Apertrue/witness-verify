@@ -23,17 +23,23 @@
 
 ## What this is
 
-[Witness](https://witness.apertrue.photo) proves, during a video call, that the person on camera is using a camera they registered in advance. Each proof it produces is a receipt, and this crate is the verifier for those receipts. Anyone can run it, so nobody has to take a receipt on our word. It reads batch receipts (version 5), enrolment proofs (version 2) and membership proofs (version 2). It decodes and verifies three artefacts. **Batch receipts** are a zero-knowledge proof over a run of windows of video frames, NeutronNova multi-folded and proven with Spartan on vega-prover, Apertrue's fork of Microsoft's Spartan2, over BN254 with Poseidon2. **Enrolment proofs** show that a registry entry and its enrolment commitment describe the same sensor. **Membership proofs** show that a camera is in the registry, a Merkle tree of depth 20, without revealing which entry is its own. The prover isn't here. A proof's soundness rests on the circuits and the backend, which are in this repository or pinned by it, not on the prover being secret.
+Deepfakes on video calls are getting hard to tell apart by eye. [Witness](https://witness.apertrue.photo) does not try to spot them. It proves where the video came from instead, by showing that the person on the call is using a camera they registered in advance. Each proof it produces is a receipt, and this crate is the verifier for those receipts. Anyone can run it, so nobody has to take a receipt on our word.
+
+Every camera sensor has a physical fingerprint, a faint pattern in its pixels known in the research as photo-response non-uniformity, or PRNU. Witness measures it once, when the camera is enrolled, and each proof checks the call's frames against it, window by window, without revealing the fingerprint. [How Witness works](https://witness.apertrue.photo/how) explains it in more detail.
+
+The crate decodes and verifies three artefacts. **Batch receipts** (version 5) are a zero-knowledge proof over a run of windows of video frames, NeutronNova multi-folded and proven with Spartan on [vega-prover](https://github.com/Apertrue/vega-prover), Apertrue's fork of Microsoft's Spartan2, over BN254 with Poseidon2. **Enrolment proofs** (version 2) show that a registry entry and its enrolment commitment describe the same sensor. **Membership proofs** (version 2) show that a camera is in the registry, a Merkle tree of depth 20, without revealing which entry is its own.
+
+The proving library, vega-prover, is open source and pinned here, and so are the circuits. The prover in the Witness app, which turns camera frames into proofs, is not. You do not need it to check a proof, because a proof's soundness rests on the circuits and the backend, not on the prover.
 
 ## What a verified receipt shows
 
 A verified batch receipt establishes, for each window, the verdict against the camera's committed limit, the window's picture root, and the chain head it moves from and to. It establishes for the batch that the enrolled measurements behind the blinded commitment are the ones the chain's genesis was built from. Together with the call's membership proof, which publishes the same blinded value, that means the windows came from one camera registered in advance, and reached the verifier unaltered. The verifier learns the registry root, which is public anyway, and a value that is fresh every call, so two calls from one camera publish unrelated values.
 
-It also covers the picture of the face that the Witness verify page shows beside the call, which is taken from those same frames. Whether that face matches the sender's passport is a separate check, not part of this proof. Video swapped into the meeting by software, from a file or a face-swapping tool, never touches the proof, because the proof reads the camera and not the meeting app.
+It also covers the picture of the face that the Witness verify page shows beside the call, which is taken from those same frames. Whether that face matches the sender's passport is a separate check, not part of this proof. The proof reads the camera, not the meeting app, so it says nothing about the video a meeting app shows. Video swapped into the meeting app by software, from a file or a face-swapping tool, does not reach the picture, so the check that matters is a viewer comparing that picture with the video in their meeting.
 
 ## Limits
 
-The proof covers the camera and that picture, nothing more. **It does not prove a live person is in front of the lens.** A deepfake can still reach a viewer three ways. A screen or a mask held in front of the enrolled camera is captured like anything else. A computer with its protections switched off can be fed frames ahead of the camera extension, and if they carry the enrolled sensor's pattern the check passes. Hardware spliced into the camera module inside the computer is beyond anything software can attest. The voice is not checked at all. Only the person using Witness is checked, and nothing here speaks for anyone else on the call.
+The proof covers the camera and the picture of the face taken from its frames, nothing more. **It does not prove a live person is in front of the lens.** A deepfake can still reach a viewer three ways. A screen or a mask held in front of the enrolled camera is captured like anything else. The separate face comparison only flags it when the face shown does not look like the passport holder. A computer with its protections switched off can be fed frames ahead of the camera extension, and if they carry the enrolled sensor's pattern the check passes. The Witness verify page says separately whether Apple attests a genuine Mac with full security on, but that is Apple's statement, not part of this proof. Hardware spliced into the camera module inside the computer is beyond anything software can attest. The voice is not checked at all. Only the person using Witness is checked, and nothing here speaks for anyone else on the call.
 
 ## Try it
 
@@ -116,7 +122,7 @@ The first verification for a batch size runs key setup, which takes seconds rath
 
 ### From a terminal
 
-The crate builds four command-line verifiers. Each reads its input through a byte cap, prints what the proof establishes as JSON on stdout, and answers with its exit code: 0 for valid, 1 for refused (the reason on stderr), 2 for usage or unreadable input.
+The crate builds four command-line tools. Each reads its input through a byte cap, prints what the proof establishes as JSON on stdout, and answers with its exit code: 0 for valid, 1 for refused (the reason on stderr), 2 for usage or unreadable input.
 
 ```bash
 cargo build --release --bins
@@ -171,9 +177,11 @@ membership  92eca04116a47bf9c6afa5e1dab3041f02e71a0c12f0ba0f8213c2fa4e41d638
 
 ## Security model
 
-The verifier trusts the circuit definitions in this repository, the vega-prover backend at the revision pinned in `Cargo.toml`, halo2curves for BN254, and the Poseidon2 parameters, which match Aztec's barretenberg reference at a pinned revision, all 260 values in order.
+The verifier trusts the circuit definitions in this repository, the vega-prover backend at the revision pinned in `Cargo.toml`, halo2curves for BN254, and the standard Poseidon2 parameters (generated by Horizen Labs), which match the published copy in Aztec's barretenberg library at a pinned revision, all 260 values in order.
 
 It does not trust the Witness service, the network between it and you, or the prover. A receipt is checked as bytes from an adversary. The service carries the evidence between the call and you, and has no say in whether it verifies.
+
+The crate checks that a camera is in the registry under a given root, but not that the root is the registry's published one. The Witness verify page does that, against the registry's signed root and its public log, cosigned by independent witnesses.
 
 ## Status
 

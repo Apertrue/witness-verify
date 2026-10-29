@@ -6,7 +6,6 @@ Please report security problems privately, not in a public issue or pull request
 
 Security reports: email security@apertrue.photo. Please do not open a public issue for a vulnerability.
 
-
 Include what you found, the version or commit, and the receipt bytes or steps that reproduce it, if you have them. We will acknowledge your report, keep you informed while we work on it, and credit you in the fix unless you would rather we did not.
 
 ## What is in scope
@@ -19,6 +18,6 @@ Include what you found, the version or commit, and the receipt bytes or steps th
 
 ## What is out of scope
 
-The limits stated in the README under "What a receipt proves, and what it does not" are known boundaries, not vulnerabilities: a screen or a mask in front of the enrolled camera, a computer with its protections switched off, hardware spliced into the camera module, and the voice.
+The limits stated in the README under "Limits" are known boundaries, not vulnerabilities: a screen or a mask in front of the enrolled camera, a computer with its protections switched off, hardware spliced into the camera module, and the voice.
 
 Problems in the Witness service, the apps or the website are welcome too, at the same contact.
